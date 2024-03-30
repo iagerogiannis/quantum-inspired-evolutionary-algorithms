@@ -17,17 +17,19 @@ Quantum-inspired evolutionary algorithms combine concepts from evolutionary comp
 
 To get started with the Quantum-Inspired Evolutionary Algorithms, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/your-username/quantum-inspired-evolutionary-algorithms.git`
+1. Clone the repository: `git clone https://github.com/iagerogiannis/quantum-inspired-evolutionary-algorithms.git`
 2. Navigate to the project directory: `cd quantum-inspired-evolutionary-algorithms`
 3. Set up a virtual environment:
-   - On Windows, run: `py -m venv venv`
-   - On Unix or MacOS, run: `python3 -m venv venv`
+   - On Windows, run: `py -m venv .venv`
+   - On Unix or MacOS, run: `python3 -m venv .venv`
 4. Activate the virtual environment:
-   - On Windows, run: `.\venv\Scripts\activate`
-   - On Unix or MacOS, run: `source venv/bin/activate`
+   - On Windows, run: `.\.venv\Scripts\activate`
+   - On Unix or MacOS, run: `source .venv/bin/activate`
 5. Install the required dependencies: `pip install -r requirements.txt`
-6. Explore the examples and documentation to understand how to use the algorithms
-7. Start experimenting with the algorithms on your own optimization problems
+6. Run `ipython kernel install --user --name=quantum-inspired-evolutionary-algorithms`
+7. Ensure you are running all Jupiter Notebooks using the kernel of the virtual environment you've just set up
+8. Explore the examples and documentation to understand how to use the algorithms
+9. Start experimenting with the algorithms on your own optimization problems
 
 ## Contributing
 
