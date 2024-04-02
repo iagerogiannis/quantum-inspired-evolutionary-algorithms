@@ -1,8 +1,6 @@
 import random
 from .individual import Individual
 
-random.seed(2)
-
 
 class Generation():
   def __init__(self, design_variables, fitness_function, evolution_strategy, population=None):

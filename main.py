@@ -1,17 +1,23 @@
+import random
+from src.lib.quantum_genetic_algorithm import QuantumIndividual
 from src.lib.classical_genetic_algorithm import ClassicalGeneticAlgorithm
 
+def f(x):
+    x1, x2, x3 = x
+    return x1 ** 2 + x2 ** 2 + x3 ** 2
 
-def main():
-    def f(x):
-        x1, x2, x3 = x
-        return x1 ** 2 + x2 ** 2 + x3 ** 2
 
-    design_variables = [
-        {'name': 'x', 'lower_bound': -200, 'upper_bound': 200, 'bits': 12},
-        {'name': 'y', 'lower_bound': -200, 'upper_bound': 200, 'bits': 12},
-        {'name': 'z', 'lower_bound': -200, 'upper_bound': 200, 'bits': 12}
-    ]
+design_variables = [
+    {'name': 'x', 'lower_bound': -200, 'upper_bound': 200, 'bits': 12},
+    {'name': 'y', 'lower_bound': -200, 'upper_bound': 200, 'bits': 12},
+    {'name': 'z', 'lower_bound': -200, 'upper_bound': 200, 'bits': 12}
+]
 
+seed = 42
+random.seed(seed)
+
+
+def run_classical_genetic_algorithm():
     evolution_strategy = {
         'num_of_generations': 300,
         'population_size': 120,
@@ -35,5 +41,14 @@ def main():
     cga.plot_convergence()
 
 
+def run_quantum_genetic_algorithm():
+    quantum_individual = QuantumIndividual(design_variables, f)
+    measurement = quantum_individual.measure()
+    print(f'Measurement: {measurement["measurement"]}')
+    print(f'Decoded Measurement: {measurement["decoded_measurement"]}')
+    print(f'Fitness Score: {measurement["fitness_score"]}')
+
+
 if __name__ == '__main__':
-    main()
+    # run_classical_genetic_algorithm()
+    run_quantum_genetic_algorithm()

@@ -1,8 +1,6 @@
 import random
 from ..chromosome_decoder import ChromosomeDecoder
 
-random.seed(1)
-
 
 class Individual:
     def __init__(self, design_variables, fitness_function, chromosome=None):
