@@ -1,6 +1,8 @@
 import random
 from src.lib.quantum_genetic_algorithm import QuantumIndividual
 from src.lib.classical_genetic_algorithm import ClassicalGeneticAlgorithm
+from src.lib.classical_genetic_algorithm.generation import Generation as ClassicalGeneticAlgorithmModel
+from src.lib.genetic_algorithm import GeneticAlgorithm
 
 def f(x):
     x1, x2, x3 = x
@@ -26,13 +28,14 @@ def run_classical_genetic_algorithm():
         'mutation_rate': 0.05
     }
 
-    cga = ClassicalGeneticAlgorithm()
-    cga.set_evolution_strategy(evolution_strategy)
-    cga.set_design_variables(design_variables)
-    cga.set_fitness_function(f)
+    cga = GeneticAlgorithm(
+        design_variables=design_variables,
+        fitness_function=f,
+        evolution_strategy=evolution_strategy,
+        model=ClassicalGeneticAlgorithmModel
+    )
 
-    cga.initialize_generation()
-    cga.evolve()
+    cga.solve()
 
     optimal_individual = cga.get_optimal_individual()
     print(f'Optimal Individual: {optimal_individual.decode()}')
@@ -42,13 +45,29 @@ def run_classical_genetic_algorithm():
 
 
 def run_quantum_genetic_algorithm():
-    quantum_individual = QuantumIndividual(design_variables, f)
-    measurement = quantum_individual.measure()
-    print(f'Measurement: {measurement["measurement"]}')
-    print(f'Decoded Measurement: {measurement["decoded_measurement"]}')
-    print(f'Fitness Score: {measurement["fitness_score"]}')
+    evolution_strategy = {
+        'num_of_generations': 300,
+        'population_size': 120,
+        'elitism_rate': 0.2,
+        'crossover_elitism_rate': 0.5,
+        'mutation_rate': 0.05
+    }
+
+    # qca = QuantumGeneticAlgorithm(
+    #     design_variables=design_variables,
+    #     fitness_function=f,
+    #     evolution_strategy=evolution_strategy
+    # )
+
+    # qca.solve()
+
+    # quantum_individual = QuantumIndividual(design_variables, f)
+    # measurement = quantum_individual.measure()
+    # print(f'Measurement: {measurement["measurement"]}')
+    # print(f'Decoded Measurement: {measurement["decoded_measurement"]}')
+    # print(f'Fitness Score: {measurement["fitness_score"]}')
 
 
 if __name__ == '__main__':
-    # run_classical_genetic_algorithm()
-    run_quantum_genetic_algorithm()
+    run_classical_genetic_algorithm()
+    # run_quantum_genetic_algorithm()
