@@ -25,7 +25,9 @@ To get started with the Quantum-Inspired Evolutionary Algorithms, follow these s
 4. Activate the virtual environment:
    - On Windows, run: `.\.venv\Scripts\activate`
    - On Unix or MacOS, run: `source .venv/bin/activate`
-5. Install the required dependencies: `pip install -r requirements.txt`
+5. Install the required dependencies:
+   - On Windows, run: `pip install -r requirements-win.txt`
+   - On Unix or MacOS, run: `pip install -r requirements-unix.txt`
 6. Run `ipython kernel install --user --name=quantum-inspired-evolutionary-algorithms`
 7. Ensure you are running all Jupiter Notebooks using the kernel of the virtual environment you've just set up
 8. Explore the examples and documentation to understand how to use the algorithms
