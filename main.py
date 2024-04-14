@@ -1,5 +1,5 @@
 import random
-from src.lib.evolutionary_algorithms import CEASolver, QEASolver
+from src.lib.evolutionary_algorithms import CEASolver, QEASolver, QEAModel
 
 
 seed = 42
@@ -29,17 +29,14 @@ ea_model_params = [
         },
         'solver': CEASolver
     }, 
-    # {
-    #     'name': 'Quantum Evolutionary Algorithm',
-    #     'strategy': {
-    #         'num_of_generations': 300,
-    #         'population_size': 120,
-    #         'elitism_rate': 0.2,
-    #         'crossover_elitism_rate': 0.5,
-    #         'mutation_rate': 0.05
-    #     },
-    #     'solver': QEASolver
-    # }
+    {
+        'name': 'Quantum Evolutionary Algorithm',
+        'strategy': {
+            'num_of_generations': 1000,
+            'population_size': 30,
+        },
+        'solver': QEAModel
+    }
 ]
 
 
@@ -58,11 +55,11 @@ def run_ea_models():
 
         ea_solver.solve()
 
-        optimal_individual = ea_solver.get_optimal_individual()
-        print(f'Optimal Individual: {optimal_individual.decode()}')
-        print(f'Optimal Fitness: {optimal_individual.fitness_score}')
+        # optimal_individual = ea_solver.get_optimal_individual()
+        # print(f'Optimal Individual: {optimal_individual.decode()}')
+        # print(f'Optimal Fitness: {optimal_individual.fitness_score}')
 
-        ea_solver.plot_convergence()
+        # ea_solver.plot_convergence()
 
 
 if __name__ == '__main__':

@@ -13,6 +13,10 @@ class QEAIndividual(EAIndividual):
           quBit.initialize()
         return chromosome
 
+    def update_chromosome(self, directions):
+        for i, quBit in enumerate(self.chromosome):
+            quBit.rotate(directions[i])
+
     def measure(self):
         measurement = [quBit.measure() for quBit in self.chromosome]
         decoded_measurement = self.decode(measurement)

@@ -1,7 +1,8 @@
+import math
+import random
 from qiskit import QuantumRegister, ClassicalRegister, QuantumCircuit
 from qiskit.quantum_info import Statevector
 from qiskit.visualization import plot_bloch_multivector
-import random
 
 
 class QuBitSim():
@@ -14,6 +15,11 @@ class QuBitSim():
   def initialize(self):
     self.qc.h(0)
     self.update_statevector()
+
+  def rotate(self, direction = 1, angle=0.01*math.pi):
+    if direction * angle != 0:
+      self.qc.ry(direction * angle, 0)
+      self.update_statevector()
 
   def draw(self):
     return self.qc.draw(output='mpl')

@@ -12,7 +12,7 @@ class ChromosomeDecoder:
 
         decoded = []
         index = 0
-        for _, variable in enumerate(self.design_variables):
+        for variable in self.design_variables:
             num_of_bits = variable['bits']
             lower_bound = variable['lower_bound']
             upper_bound = variable['upper_bound']
