@@ -1,13 +1,10 @@
-from ..chromosome_decoder import ChromosomeDecoder
+from ..evolutionary_algorithm import EAIndividual
 from .qubuit_simulator import QuBitSim
 
 
-class QuantumIndividual():
+class QEAIndividual(EAIndividual):
     def __init__(self, design_variables, fitness_function):
-        self.design_variables = design_variables
-        self.fitness_function = fitness_function
-        self.decoder = ChromosomeDecoder(design_variables)
-        self.chromosome = self.initialize_chromosome()
+        super().__init__(design_variables, fitness_function)
 
     def initialize_chromosome(self):
         num_of_qubits = sum(variable['bits'] for variable in self.design_variables)
@@ -18,7 +15,6 @@ class QuantumIndividual():
 
     def measure(self):
         measurement = [quBit.measure() for quBit in self.chromosome]
-        print(measurement)
         decoded_measurement = self.decode(measurement)
         fitness_score = self.fitness_function(decoded_measurement)
         return {

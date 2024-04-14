@@ -1,6 +1,11 @@
 import random
-from src.lib.quantum_genetic_algorithm import QuantumIndividual
-from src.lib.classical_genetic_algorithm import ClassicalGeneticAlgorithm
+from src.lib.classical_evolutionary_algorithm import CEASolver
+from src.lib.quantum_evolutionary_algorithm import QEASolver
+
+
+seed = 42
+random.seed(seed)
+
 
 def f(x):
     x1, x2, x3 = x
@@ -13,42 +18,53 @@ design_variables = [
     {'name': 'z', 'lower_bound': -200, 'upper_bound': 200, 'bits': 12}
 ]
 
-seed = 42
-random.seed(seed)
+ea_model_params = [
+    {
+        'name': 'Classical Evolutionary Algorithm',
+        'strategy': {
+            'num_of_generations': 300,
+            'population_size': 120,
+            'elitism_rate': 0.2,
+            'crossover_elitism_rate': 0.5,
+            'mutation_rate': 0.05
+        },
+        'solver': CEASolver
+    }, 
+    # {
+    #     'name': 'Quantum Evolutionary Algorithm',
+    #     'strategy': {
+    #         'num_of_generations': 300,
+    #         'population_size': 120,
+    #         'elitism_rate': 0.2,
+    #         'crossover_elitism_rate': 0.5,
+    #         'mutation_rate': 0.05
+    #     },
+    #     'solver': QEASolver
+    # }
+]
 
 
-def run_classical_genetic_algorithm():
-    evolution_strategy = {
-        'num_of_generations': 300,
-        'population_size': 120,
-        'elitism_rate': 0.2,
-        'crossover_elitism_rate': 0.5,
-        'mutation_rate': 0.05
-    }
+def run_ea_models():
+    for params in ea_model_params:
+        print(f'Running {params["name"]}...')
 
-    cga = ClassicalGeneticAlgorithm()
-    cga.set_evolution_strategy(evolution_strategy)
-    cga.set_design_variables(design_variables)
-    cga.set_fitness_function(f)
+        solver = params['solver']
+        strategy = params['strategy']
 
-    cga.initialize_generation()
-    cga.evolve()
+        ea_solver = solver(
+            evolution_strategy=strategy,
+            design_variables=design_variables,
+            fitness_function=f,
+        )
 
-    optimal_individual = cga.get_optimal_individual()
-    print(f'Optimal Individual: {optimal_individual.decode()}')
-    print(f'Optimal Fitness: {optimal_individual.fitness_score}')
+        ea_solver.solve()
 
-    cga.plot_convergence()
+        optimal_individual = ea_solver.get_optimal_individual()
+        print(f'Optimal Individual: {optimal_individual.decode()}')
+        print(f'Optimal Fitness: {optimal_individual.fitness_score}')
 
-
-def run_quantum_genetic_algorithm():
-    quantum_individual = QuantumIndividual(design_variables, f)
-    measurement = quantum_individual.measure()
-    print(f'Measurement: {measurement["measurement"]}')
-    print(f'Decoded Measurement: {measurement["decoded_measurement"]}')
-    print(f'Fitness Score: {measurement["fitness_score"]}')
+        ea_solver.plot_convergence()
 
 
 if __name__ == '__main__':
-    # run_classical_genetic_algorithm()
-    run_quantum_genetic_algorithm()
+    run_ea_models()

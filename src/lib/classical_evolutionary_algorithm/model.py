@@ -1,16 +1,11 @@
 import random
-from .individual import Individual
+from ..evolutionary_algorithm import EAModel
+from .individual import CEAIndividual
 
 
-class Generation():
+class CEAModel(EAModel):
   def __init__(self, design_variables, fitness_function, evolution_strategy, population=None):
-    self.design_variables = design_variables
-    self.fitness_function = fitness_function
-    self.evolution_strategy = evolution_strategy
-    self.population = population if population else self.initialize_population()
-
-  def initialize_population(self):
-    return [Individual(self.design_variables, self.fitness_function) for _ in range(self.evolution_strategy['population_size'])]
+    super().__init__(design_variables, fitness_function, evolution_strategy, CEAIndividual, population)
 
   def apply_elitism(self):
     num_of_elites = int(self.evolution_strategy['population_size'] * self.evolution_strategy['elitism_rate'])    
@@ -37,13 +32,4 @@ class Generation():
     elites = self.apply_elitism()
     offsprings = self.mate_individuals()
 
-    return Generation(self.design_variables, self.fitness_function, self.evolution_strategy, elites + offsprings)
-  
-  def average_fitness(self):
-    return sum([individual.fitness_score for individual in self.population]) / self.evolution_strategy['population_size']
-  
-  def optimal_fitness(self):
-    return min([individual.fitness_score for individual in self.population])
-  
-  def optimal_individual(self):
-    return min(self.population, key=lambda x: x.fitness_score)
+    return CEAModel(self.design_variables, self.fitness_function, self.evolution_strategy, elites + offsprings)
