@@ -1,4 +1,4 @@
-from ..chromosome_decoder import ChromosomeDecoder
+from ...chromosome_decoder import ChromosomeDecoder
 
 class EAIndividual:
     def __init__(self, design_variables, fitness_function, chromosome=None):

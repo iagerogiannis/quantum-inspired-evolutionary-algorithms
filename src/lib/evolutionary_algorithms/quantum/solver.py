@@ -1,4 +1,4 @@
-from ..evolutionary_algorithm import EASolver
+from ..base import EASolver
 from .model import QEAModel
 
 class QEASolver(EASolver):

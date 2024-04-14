@@ -1,6 +1,5 @@
 import random
-from src.lib.classical_evolutionary_algorithm import CEASolver
-from src.lib.quantum_evolutionary_algorithm import QEASolver
+from src.lib.evolutionary_algorithms import CEASolver, QEASolver
 
 
 seed = 42

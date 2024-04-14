@@ -1,5 +1,5 @@
 import random
-from ..evolutionary_algorithm import EAIndividual
+from ..base import EAIndividual
 
 
 class CEAIndividual(EAIndividual):

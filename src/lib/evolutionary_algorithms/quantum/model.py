@@ -1,4 +1,4 @@
-from ..evolutionary_algorithm import EAModel
+from ..base import EAModel
 from .individual import QEAIndividual
 
 class QEAModel(EAModel):

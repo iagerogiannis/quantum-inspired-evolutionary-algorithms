@@ -1,4 +1,4 @@
-from ..evolutionary_algorithm import EAIndividual
+from ..base import EAIndividual
 from .qubuit_simulator import QuBitSim
 
 
