@@ -1,13 +1,10 @@
 import random
-from ..chromosome_decoder import ChromosomeDecoder
+from ..evolutionary_algorithm import EAIndividual
 
 
-class Individual:
+class CEAIndividual(EAIndividual):
     def __init__(self, design_variables, fitness_function, chromosome=None):
-        self.design_variables = design_variables
-        self.decoder = ChromosomeDecoder(design_variables)
-        self.fitness_function = fitness_function
-        self.chromosome = chromosome if chromosome else self.initialize_chromosome()
+        super().__init__(design_variables, fitness_function, chromosome)
         self.fitness_score = None
         self.evaluate_fitness()
 
@@ -26,8 +23,8 @@ class Individual:
         offspring1_chromosome = self.chromosome[:crossover_point] + parent2.chromosome[crossover_point:]
         offspring2_chromosome = parent2.chromosome[:crossover_point] + self.chromosome[crossover_point:]
 
-        return [Individual(self.design_variables, self.fitness_function, offspring1_chromosome),
-                Individual(self.design_variables, self.fitness_function, offspring2_chromosome)]
+        return [CEAIndividual(self.design_variables, self.fitness_function, offspring1_chromosome),
+                CEAIndividual(self.design_variables, self.fitness_function, offspring2_chromosome)]
 
     def mutate(self, mutation_rate=None):
         mutated_chromosome = self.chromosome.copy()
@@ -39,10 +36,10 @@ class Individual:
             if random.random() < mutation_rate:
                 mutated_chromosome[i] = 1 - mutated_chromosome[i]
 
-        return Individual(self.design_variables, self.fitness_function, mutated_chromosome)
+        return CEAIndividual(self.design_variables, self.fitness_function, mutated_chromosome)
 
     def evaluate_fitness(self):
         self.fitness_score = self.fitness_function(self.decode())
-
+    
     def decode(self):
         return self.decoder.decode(self.chromosome)

@@ -1,17 +1,17 @@
 import matplotlib.pyplot as plt
 
 
-class GeneticAlgorithm():
+class EASolver():
   def __init__(self, design_variables, fitness_function, evolution_strategy, model):
     self.design_variables = design_variables
     self.fitness_function = fitness_function
     self.evolution_strategy = evolution_strategy
-    self.moel = model
+    self.model = model
     self.generations = []
 
   def initialize_generation(self):
     self.generations.append(
-      self.moel(self.design_variables, self.fitness_function, self.evolution_strategy)
+      self.model(self.design_variables, self.fitness_function, self.evolution_strategy)
     )
   
   def evolve(self):
@@ -31,5 +31,5 @@ class GeneticAlgorithm():
     plt.plot(range(len(best_fitness_values)), best_fitness_values)
     plt.xlabel('Generation')
     plt.ylabel('Best Fitness')
-    plt.title('Convergence of CGA Generations')
+    plt.title('Convergence of Generations')
     plt.show()
