@@ -1,11 +1,9 @@
-import math
 from ..base import EAModel
 from .individual import QEAIndividual
 
 class QEAModel(EAModel):
   def __init__(self, design_variables, fitness_function, evolution_strategy, population=None):
     super().__init__(design_variables, fitness_function, evolution_strategy, QEAIndividual, population)
-    self.generation = 0
     self.best_solutions = self.observe_population()
     self.all_time_best = self.get_all_time_best()
 
@@ -19,7 +17,7 @@ class QEAModel(EAModel):
     self.all_time_best = self.get_all_time_best()
 
   def get_all_time_best(self):
-    return max(self.best_solutions, key=lambda x: x['fitness_score'])
+    return min(self.best_solutions, key=lambda x: x['fitness_score'])
 
   def update_individuals(self, new_population):
     def get_direction_for_qu_bit(x_i, b_i):
@@ -51,16 +49,19 @@ class QEAModel(EAModel):
       self.population[i].update_chromosome(directions)
 
   def evolve(self):
-    self.generation += 1
     new_population = self.observe_population()
     self.update_individuals(new_population)
     self.update_best_solutions(new_population)
-    print(f'Generation: {self.generation}')
-    print(f'All Time Best: {self.all_time_best}')
     # if (migration-condition)
     # then migrate or b_j^t to B(t) globally or locally, respectively
     return
 
-  def solve(self):
-    for _ in range(self.evolution_strategy['num_of_generations']):
-      self.evolve()
+  def get_average_fitness(self):
+    # return sum([individual.fitness_score for individual in self.population])/ self.evolution_strategy['population_size']
+    return 0
+
+  def get_optimal_fitness(self):
+    return self.all_time_best['fitness_score']
+
+  def get_optimal_solution(self):
+    return self.all_time_best['decoded_measurement']

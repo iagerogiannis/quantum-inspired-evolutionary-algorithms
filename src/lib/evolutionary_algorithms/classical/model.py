@@ -31,5 +31,4 @@ class CEAModel(EAModel):
   def evolve(self):
     elites = self.apply_elitism()
     offsprings = self.mate_individuals()
-
-    return CEAModel(self.design_variables, self.fitness_function, self.evolution_strategy, elites + offsprings)
+    self.population = elites + offsprings

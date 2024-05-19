@@ -14,11 +14,11 @@ class EAModel():
   def evolve(self):
     return
   
-  def average_fitness(self):
+  def get_average_fitness(self):
     return sum([individual.fitness_score for individual in self.population])/ self.evolution_strategy['population_size']
   
-  def optimal_fitness(self):
+  def get_optimal_fitness(self):
     return min([individual.fitness_score for individual in self.population])
   
-  def optimal_individual(self):
-    return min(self.population, key=lambda x: x.fitness_score)
+  def get_optimal_solution(self):
+    return min(self.population, key=lambda x: x.fitness_score).decode()

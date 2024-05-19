@@ -1,5 +1,6 @@
 import random
-from src.lib.evolutionary_algorithms import CEASolver, QEASolver, QEAModel
+from src.lib.evolutionary_algorithms import CEASolver, QEASolver
+from src.lib.utils import *
 
 
 seed = 42
@@ -20,6 +21,7 @@ design_variables = [
 ea_model_params = [
     {
         'name': 'Classical Evolutionary Algorithm',
+        'solver': CEASolver,
         'strategy': {
             'num_of_generations': 300,
             'population_size': 120,
@@ -27,21 +29,21 @@ ea_model_params = [
             'crossover_elitism_rate': 0.5,
             'mutation_rate': 0.05
         },
-        'solver': CEASolver
     }, 
     {
         'name': 'Quantum Evolutionary Algorithm',
+        'solver': QEASolver,
         'strategy': {
-            'num_of_generations': 1000,
+            'num_of_generations': 300,
             'population_size': 30,
         },
-        'solver': QEAModel
     }
 ]
 
 
 def run_ea_models():
     for params in ea_model_params:
+        print()
         print(f'Running {params["name"]}...')
 
         solver = params['solver']
@@ -54,12 +56,8 @@ def run_ea_models():
         )
 
         ea_solver.solve()
-
-        # optimal_individual = ea_solver.get_optimal_individual()
-        # print(f'Optimal Individual: {optimal_individual.decode()}')
-        # print(f'Optimal Fitness: {optimal_individual.fitness_score}')
-
-        # ea_solver.plot_convergence()
+        ea_solver.print_solution_summary()
+        ea_solver.plot_convergence(f'convergence_{kebab_case(params["name"])}.png')
 
 
 if __name__ == '__main__':
